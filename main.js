@@ -18,7 +18,7 @@ const productDatabase = [
         category: 'smartphones',
         price: 899,
         condition: 'new',
-        image: './resources/products/oppo-find-x7.jpg',
+        image: './resources/products/iphone-15-pro-max.jpg',
         rating: 4.5,
         features: ['6.7" AMOLED Display', 'Snapdragon 8 Gen 3', '50MP Triple Camera', '5000mAh Battery'],
         description: 'Latest flagship with advanced camera system and premium design'
@@ -30,7 +30,7 @@ const productDatabase = [
         category: 'smartphones',
         price: 799,
         condition: 'new',
-        image: './resources/products/xiaomi-14-pro.jpg',
+        image: './resources/products/xiaomi-14-pro.jpgs',
         rating: 4.7,
         features: ['6.73" LTPO AMOLED', 'Snapdragon 8 Gen 3', 'Leica Camera', '120W Fast Charging'],
         description: 'Professional photography smartphone with Leica partnership'
@@ -158,7 +158,7 @@ function initializeHeroAnimations() {
                 'Premium Electronics',
                 'Certified Quality',
                 'Best Prices',
-                'ShopWisePro'
+                'ShopWise-Pro'
             ],
             typeSpeed: 80,
             backSpeed: 50,
