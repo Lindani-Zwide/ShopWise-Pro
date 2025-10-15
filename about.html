@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ShopWisePro | Premium Electronics & Mobile Phones</title>
+    <meta name="description" content="Learn about ShopWisePro's mission to provide premium electronics and mobile phones with certified quality, best prices, and exceptional service across South Africa.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-black: #000000;
+            --primary-white: #ffffff;
+            --charcoal-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --silver: #c0c0c0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-black);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .search-overlay {
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--charcoal-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-black);
+            border: 2px solid var(--primary-black);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            transform: translateY(-2px);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            position: relative;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="./resources/logo.png" alt="ShopWisePro Logo" class="h-10 w-auto">
+                    <span class="ml-3 font-display text-2xl font-bold text-black">ShopWisePro</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-black hover:text-gray-600 font-medium">Home</a>
+                    <a href="products.html" class="nav-link text-black hover:text-gray-600 font-medium">Products</a>
+                    <a href="about.html" class="nav-link text-black hover:text-gray-600 font-medium">About</a>
+                    <a href="contact.html" class="nav-link text-black hover:text-gray-600 font-medium">Contact</a>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" id="navSearch" placeholder="Search products..." 
+                               class="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                        <button onclick="openSearchOverlay()" class="absolute right-2 top-2 text-gray-500 hover:text-black">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Auth Buttons -->
+                    <button onclick="openAuthModal('signin')" class="btn-primary px-4 py-2 rounded-lg font-medium">Sign In</button>
+                    <button onclick="openAuthModal('register')" class="btn-secondary px-4 py-2 rounded-lg font-medium">Register</button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-black hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-black hover:text-gray-600">Home</a>
+                <a href="products.html" class="block py-2 text-black hover:text-gray-600">Products</a>
+                <a href="about.html" class="block py-2 text-black hover:text-gray-600">About</a>
+                <a href="contact.html" class="block py-2 text-black hover:text-gray-600">Contact</a>
+                <div class="pt-2 space-y-2">
+                    <button onclick="openAuthModal('signin')" class="w-full btn-primary px-4 py-2 rounded-lg font-medium">Sign In</button>
+                    <button onclick="openAuthModal('register')" class="w-full btn-secondary px-4 py-2 rounded-lg font-medium">Register</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-20 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center reveal">
+                <h1 class="font-display text-5xl md:text-6xl font-bold text-black mb-6">About ShopWisePro</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We're passionate about connecting South Africans with premium electronics at unbeatable prices, 
+                    backed by certified quality and exceptional service.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Story Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="reveal">
+                    <h2 class="font-display text-4xl font-bold text-black mb-6">Our Story</h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Founded in 2020, ShopWisePro emerged from a simple belief: everyone deserves access to premium electronics 
+                        without the premium price tag. What started as a small operation in Cape Town has grown into South Africa's 
+                        most trusted destination for certified pre-owned and brand new devices.
+                    </p>
+                    <p class="text-lg text-gray-600 mb-6">
+                        Our journey began when we noticed a gap in the market - customers wanted high-quality devices but struggled 
+                        with the high costs and uncertainty of buying pre-owned electronics. We solved this by creating a rigorous 
+                        certification process that gives every customer peace of mind.
+                    </p>
+                    <p class="text-lg text-gray-600">
+                        Today, we're proud to serve thousands of satisfied customers across South Africa, from students getting 
+                        their first smartphone to professionals upgrading their work devices.
+                    </p>
+                </div>
+                <div class="reveal">
+                    <img src="./resources/hero-bg.jpg" alt="Our Story" class="rounded-xl shadow-lg w-full h-96 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Values Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-black mb-4">Our Mission & Values</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Driven by purpose, guided by principles, focused on you.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="stats-card text-center reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-4">Quality First</h3>
+                    <p class="text-gray-600">Every device undergoes a comprehensive 50-point inspection process to ensure it meets our high standards for performance and reliability.</p>
+                </div>
+                
+                <div class="stats-card text-center reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-4">Affordable Excellence</h3>
+                    <p class="text-gray-600">We believe premium technology should be accessible to everyone. Our competitive pricing and flexible payment options make quality devices affordable.</p>
+                </div>
+                
+                <div class="stats-card text-center reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-4">Customer Centric</h3>
+                    <p class="text-gray-600">Your satisfaction is our priority. From expert advice to after-sales support, we're here to ensure you have the best possible experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-black mb-4">Our Impact</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Numbers that tell our story of growth and customer satisfaction.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <span class="font-mono text-2xl font-bold">5K+</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-2">Happy Customers</h3>
+                    <p class="text-gray-600">Satisfied customers across South Africa</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <span class="font-mono text-2xl font-bold">15K+</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-2">Devices Sold</h3>
+                    <p class="text-gray-600">Premium devices delivered to customers</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <span class="font-mono text-2xl font-bold">98%</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-2">Satisfaction Rate</h3>
+                    <p class="text-gray-600">Customer satisfaction and positive reviews</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <span class="font-mono text-2xl font-bold">4+</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-2">Years Experience</h3>
+                    <p class="text-gray-600">Building trust in the electronics market</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-black mb-4">Meet Our Team</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">The passionate experts behind ShopWisePro's success.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="team-card reveal">
+                    <div class="h-64 bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    <div class="p-6">
+                        <h3 class="font-display text-2xl font-semibold text-black mb-2">Sarah Johnson</h3>
+                        <p class="text-gray-600 mb-4">Founder & CEO</p>
+                        <p class="text-gray-600 text-sm">
+                            With over 10 years in the electronics industry, Sarah founded ShopWisePro with a vision to make 
+                            premium technology accessible to all South Africans.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="team-card reveal">
+                    <div class="h-64 bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    <div class="p-6">
+                        <h3 class="font-display text-2xl font-semibold text-black mb-2">Michael Chen</h3>
+                        <p class="text-gray-600 mb-4">Head of Quality Control</p>
+                        <p class="text-gray-600 text-sm">
+                            Michael leads our rigorous certification process, ensuring every device meets our high standards 
+                            for performance and reliability before reaching customers.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="team-card reveal">
+                    <div class="h-64 bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    <div class="p-6">
+                        <h3 class="font-display text-2xl font-semibold text-black mb-2">Aisha Patel</h3>
+                        <p class="text-gray-600 mb-4">Customer Experience Manager</p>
+                        <p class="text-gray-600 text-sm">
+                            Aisha ensures every customer receives exceptional service, from initial inquiry to after-sales 
+                            support, building lasting relationships with our community.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-black mb-4">Our Services</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive solutions for all your electronics needs.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="stats-card reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-black mb-4">Certification Process</h3>
+                    <p class="text-gray-600">Every pre-owned device undergoes our comprehensive 50-point inspection, including hardware testing, software verification, and cosmetic assessment.</p>
+                </div>
+                
+                <div class="stats-card reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-black mb-4">Warranty Coverage</h3>
+                    <p class="text-gray-600">All devices come with comprehensive warranty coverage, including technical support and repair services for your peace of mind.</p>
+                </div>
+                
+                <div class="stats-card reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-black mb-4">Fast Delivery</h3>
+                    <p class="text-gray-600">Quick and secure shipping across South Africa with real-time tracking and insurance coverage for all deliveries.</p>
+                </div>
+                
+                <div class="stats-card reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-6a2 2 0 012-2h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-black mb-4">Expert Support</h3>
+                    <p class="text-gray-600">Our knowledgeable team provides personalized recommendations and technical support to help you choose the perfect device.</p>
+                </div>
+                
+                <div class="stats-card reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-black mb-4">Trade-In Program</h3>
+                    <p class="text-gray-600">Upgrade your device with our trade-in program. Get fair value for your old devices and make upgrading more affordable.</p>
+                </div>
+                
+                <div class="stats-card reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold text-black mb-4">Secure Transactions</h3>
+                    <p class="text-gray-600">All transactions are protected with bank-level security and encryption, ensuring your personal and payment information remains safe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-6">
+                    <img src="./resources/logo.png" alt="ShopWisePro Logo" class="h-8 w-auto invert">
+                    <span class="ml-3 font-display text-xl font-bold">ShopWisePro</span>
+                </div>
+                <p class="text-gray-400 mb-4">Your trusted source for premium electronics and mobile phones</p>
+                <p class="text-gray-500 text-sm">© 2024 ShopWisePro. All rights reserved. | Designed for the modern tech enthusiast.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Overlay -->
+    <div id="searchOverlay" class="fixed inset-0 search-overlay z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl p-8 w-full max-w-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-display text-2xl font-bold text-black">Search Products</h3>
+                    <button onclick="closeSearchOverlay()" class="text-gray-500 hover:text-black">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="relative">
+                    <input type="text" id="overlaySearch" placeholder="Search for products, brands, or categories..." 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black text-lg">
+                    <button class="absolute right-3 top-3 text-gray-500 hover:text-black">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="searchResults" class="mt-4 max-h-64 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl p-8 w-full max-w-md">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="authTitle" class="font-display text-2xl font-bold text-black">Sign In</h3>
+                    <button onclick="closeAuthModal()" class="text-gray-500 hover:text-black">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="authForm">
+                    <div id="nameField" class="mb-4 hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-primary px-4 py-3 rounded-lg font-medium text-lg">
+                        <span id="authSubmitText">Sign In</span>
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-600">
+                        <span id="authSwitchText">Don't have an account?</span>
+                        <button onclick="toggleAuthMode()" id="authSwitchButton" class="text-black font-medium hover:underline ml-1">
+                            Register
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

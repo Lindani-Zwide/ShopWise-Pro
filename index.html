@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopWisePro - Premium Electronics & Mobile Phones</title>
+    <meta name="description" content="ShopWisePro - Your trusted source for certified pre-owned and brand new mobile phones, gaming consoles, and premium electronics. Best prices guaranteed.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.2/pixi.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-black: #000000;
+            --primary-white: #ffffff;
+            --charcoal-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+            --silver: #c0c0c0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('./resources/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #ffffff, #c0c0c0, #ffffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .product-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-black);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .search-overlay {
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--charcoal-gray);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-black);
+            border: 2px solid var(--primary-black);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            transform: translateY(-2px);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-bg {
+                min-height: 100vh;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="./resources/logo.png" alt="ShopWisePro Logo" class="h-10 w-auto">
+                    <span class="ml-3 font-display text-2xl font-bold text-black">ShopWise-Pro</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-black hover:text-gray-600 font-medium">Home</a>
+                    <a href="products.html" class="nav-link text-black hover:text-gray-600 font-medium">Products</a>
+                    <a href="about.html" class="nav-link text-black hover:text-gray-600 font-medium">About</a>
+                    <a href="contact.html" class="nav-link text-black hover:text-gray-600 font-medium">Contact</a>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative">
+                        <input type="text" id="navSearch" placeholder="Search products..." 
+                               class="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black">
+                        <button onclick="openSearchOverlay()" class="absolute right-2 top-2 text-gray-500 hover:text-black">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Auth Buttons -->
+                    <button onclick="openAuthModal('signin')" class="btn-primary px-4 py-2 rounded-lg font-medium">Sign In</button>
+                    <button onclick="openAuthModal('register')" class="btn-secondary px-4 py-2 rounded-lg font-medium">Register</button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-black hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-black hover:text-gray-600">Home</a>
+                <a href="products.html" class="block py-2 text-black hover:text-gray-600">Products</a>
+                <a href="about.html" class="block py-2 text-black hover:text-gray-600">About</a>
+                <a href="contact.html" class="block py-2 text-black hover:text-gray-600">Contact</a>
+                <div class="pt-2 space-y-2">
+                    <button onclick="openAuthModal('signin')" class="w-full btn-primary px-4 py-2 rounded-lg font-medium">Sign In</button>
+                    <button onclick="openAuthModal('register')" class="w-full btn-secondary px-4 py-2 rounded-lg font-medium">Register</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-16">
+        <div class="floating-particles" id="particles"></div>
+        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="font-display text-5xl md:text-7xl font-bold mb-6">
+                <span class="gradient-text" id="typed-text"></span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Discover premium mobile phones, gaming consoles, and electronics. Certified pre-owned and brand new devices at unbeatable prices.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="products.html" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold">
+                    Shop Now
+                </a>
+                <button onclick="scrollToFeatured()" class="btn-secondary px-8 py-4 rounded-lg text-lg font-semibold">
+                    View Featured
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="featured" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-black mb-4">Featured Products</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover our most popular and highly-rated devices, carefully selected for quality and performance.</p>
+            </div>
+            
+            <div class="splide" id="featured-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="aspect-w-16 aspect-h-12 bg-gray-100">
+                                    <img src="./resources/products/oppo-find-x7.jpg" alt="Oppo Find X7" class="w-full h-64 object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="font-display text-xl font-semibold text-black mb-2">Oppo Find X7</h3>
+                                    <p class="text-gray-600 mb-4">Latest flagship with advanced camera system</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-2xl font-bold text-black">$899</span>
+                                        <button onclick="addToCart('oppo-find-x7')" class="btn-primary px-4 py-2 rounded-lg font-medium">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="aspect-w-16 aspect-h-12 bg-gray-100">
+                                    <img src="./resources/products/xiaomi-14-pro.jpg" alt="Xiaomi 14 Pro" class="w-full h-64 object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="font-display text-xl font-semibold text-black mb-2">Xiaomi 14 Pro</h3>
+                                    <p class="text-gray-600 mb-4">Professional photography smartphone</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-2xl font-bold text-black">$799</span>
+                                        <button onclick="addToCart('xiaomi-14-pro')" class="btn-primary px-4 py-2 rounded-lg font-medium">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="aspect-w-16 aspect-h-12 bg-gray-100">
+                                    <img src="./resources/products/sony-wh1000xm5.jpg" alt="Sony WH-1000XM5" class="w-full h-64 object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="font-display text-xl font-semibold text-black mb-2">Sony WH-1000XM5</h3>
+                                    <p class="text-gray-600 mb-4">Industry-leading noise canceling headphones</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-2xl font-bold text-black">$399</span>
+                                        <button onclick="addToCart('sony-wh1000xm5')" class="btn-primary px-4 py-2 rounded-lg font-medium">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="product-card bg-white rounded-xl shadow-lg overflow-hidden">
+                                <div class="aspect-w-16 aspect-h-12 bg-gray-100">
+                                    <img src="./resources/products/nintendo-switch-oled.jpg" alt="Nintendo Switch OLED" class="w-full h-64 object-cover">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="font-display text-xl font-semibold text-black mb-2">Nintendo Switch OLED</h3>
+                                    <p class="text-gray-600 mb-4">Portable gaming console with OLED display</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-2xl font-bold text-black">$349</span>
+                                        <button onclick="addToCart('nintendo-switch-oled')" class="btn-primary px-4 py-2 rounded-lg font-medium">Add to Cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose ShopWisePro Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-black mb-4">Why Choose ShopWisePro</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">We provide the best value, quality, and service in the electronics market.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-4">Certified Quality</h3>
+                    <p class="text-gray-600">Every pre-owned device undergoes rigorous testing and certification to ensure optimal performance and reliability.</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-4">Best Prices</h3>
+                    <p class="text-gray-600">We offer competitive pricing on all devices, with regular promotions and deals to give you the best value for your money.</p>
+                </div>
+                
+                <div class="text-center reveal">
+                    <div class="bg-black text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold text-black mb-4">Fast Delivery</h3>
+                    <p class="text-gray-600">Quick and secure shipping across South Africa. Get your new device delivered to your doorstep in record time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-6">
+                    <img src="./resources/logo.png" alt="ShopWisePro Logo" class="h-8 w-auto invert">
+                    <span class="ml-3 font-display text-xl font-bold">ShopWisePro</span>
+                </div>
+                <p class="text-gray-400 mb-4">Your trusted source for premium electronics and mobile phones</p>
+                <p class="text-gray-500 text-sm">© 2024 ShopWisePro. All rights reserved. | Designed for the modern tech enthusiast.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Overlay -->
+    <div id="searchOverlay" class="fixed inset-0 search-overlay z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl p-8 w-full max-w-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-display text-2xl font-bold text-black">Search Products</h3>
+                    <button onclick="closeSearchOverlay()" class="text-gray-500 hover:text-black">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="relative">
+                    <input type="text" id="overlaySearch" placeholder="Search for products, brands, or categories..." 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black text-lg">
+                    <button class="absolute right-3 top-3 text-gray-500 hover:text-black">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="searchResults" class="mt-4 max-h-64 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-xl p-8 w-full max-w-md">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="authTitle" class="font-display text-2xl font-bold text-black">Sign In</h3>
+                    <button onclick="closeAuthModal()" class="text-gray-500 hover:text-black">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="authForm">
+                    <div id="nameField" class="mb-4 hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-black" required>
+                    </div>
+                    
+                    <button type="submit" class="w-full btn-primary px-4 py-3 rounded-lg font-medium text-lg">
+                        <span id="authSubmitText">Sign In</span>
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-600">
+                        <span id="authSwitchText">Don't have an account?</span>
+                        <button onclick="toggleAuthMode()" id="authSwitchButton" class="text-black font-medium hover:underline ml-1">
+                            Register
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Notification -->
+    <div id="cartNotification" class="fixed top-20 right-4 bg-black text-white px-6 py-3 rounded-lg shadow-lg z-40 transform translate-x-full transition-transform duration-300">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Added to cart!</span>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
