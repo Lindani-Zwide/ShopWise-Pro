@@ -178,7 +178,7 @@ function initializeFeaturedCarousel() {
             perMove: 1,
             gap: '2rem',
             autoplay: true,
-            interval: 4000,
+            interval: 3000,
             pauseOnHover: true,
             breakpoints: {
                 1024: {
