@@ -155,7 +155,6 @@ function initializeHeroAnimations() {
     if (document.getElementById('typed-text')) {
         const typed = new Typed('#typed-text', {
             strings: [
-                'Premium Electronics',
                 'Certified Quality',
                 'Best Prices',
                 'ShopWise-Pro'
